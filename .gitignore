@@ -1,28 +1,3 @@
-# Environment variables
-.env
-.env.local
-.env.*.local
-
-# API Keys and Secrets
-GROQ_API_KEY
-*.key
-*.pem
-
-# ChromaDB data
-chroma_data/
-*.db
-*.parquet
-
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-env/
-venv/
-ENV/
-build/
 develop-eggs/
 dist/
 downloads/
@@ -39,30 +14,31 @@ share/python-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+# Environment variables
+.env
+
+# ChromaDB data
+chroma_data/
+
+# Python
+__pycache__/
+*.py[cod]
 
 # Virtual environments
-venv
-env
-ENV
+venv/
+env/
+ENV/
 
 # IDE
 .vscode/
 .idea/
-*.swp
-*.swo
-*~
-.DS_Store
-*.sublime-workspace
 
 # Logs
 *.log
-logs/
 rag_system.log
 
 # Streamlit
 .streamlit/
-*.streamlit.app
-
 
 # Temporary files
 tmp/
@@ -71,12 +47,7 @@ temp/
 
 # Cache
 .cache/
-.pytest_cache/
 
 # OS
 Thumbs.db
 .DS_Store
-
-# Testing
-.coverage
-htmlcov/
