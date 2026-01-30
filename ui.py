@@ -217,7 +217,10 @@ def run_streamlit_ui():
                 st.subheader("✅ Answer")
                 st.markdown(answer)
 
-                st.snow()
+                # st.snow()
+                
+                if __name__ == "__main__":
+                    run_streamlit_ui()
 
                 # Display sources
                 # with st.expander("📖 View Sources"):

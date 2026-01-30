@@ -17,7 +17,8 @@ venv\Scripts\activate
 ### On macOS/Linux:
 
 ```bash
-source venv/bin/activate
+so
+urce venv/bin/activate
 ```
 
 ## 3. Install Dependencies
@@ -40,7 +41,7 @@ Get your API key from: https://console.groq.com/keys
 ## 5. Run the Application
 
 ```bash
-streamlit run ui.py
+streamlit run app.py
 ```
 
 The application will open in your default browser at `http://localhost:8501`

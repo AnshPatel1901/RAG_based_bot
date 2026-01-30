@@ -130,7 +130,7 @@ A production-grade Retrieval-Augmented Generation (RAG) system that combines doc
 ### Running
 
 ```bash
-streamlit run ui.py
+streamlit run app.py
 ```
 
 ### Using the Application
