@@ -15,9 +15,9 @@ A production-grade Retrieval-Augmented Generation (RAG) system that combines doc
 
 ### 2. Vector Embeddings
 
-- Uses Groq API embedding model (text-embedding-004) to convert text chunks
+- Uses HuggingFace embedding model (all-MiniLM-L6-v2) to convert text chunks
 - Generates embeddings for all document chunks
-- Processes embeddings in batches for API efficiency
+- Processes embeddings in batches for efficiency
 
 ### 3. Vector Database
 
@@ -27,7 +27,7 @@ A production-grade Retrieval-Augmented Generation (RAG) system that combines doc
 
 ### 4. Query Processing
 
-- Embeds user queries using the same embedding model
+- Embeds user queries using the same HuggingFace model
 - Performs semantic similarity search in ChromaDB
 - Retrieves top-5 most relevant document chunks
 
@@ -45,32 +45,25 @@ A production-grade Retrieval-Augmented Generation (RAG) system that combines doc
 - Chat history tracking
 - Source document viewing
 - Collection management
+- Snow effect on answer output
 
 ## Key Features
 
 ✅ **Production-Ready**
 
 - Comprehensive error handling at every step
-- Logging system for debugging and monitoring
-- Graceful failure modes
 
 ✅ **Modular Architecture**
 
 - Clear separation of concerns (preprocessing, embedding, retrieval, generation)
-- Reusable functions with documented parameters
-- Well-commented code for maintainability
 
 ✅ **Scalability**
 
 - Batch processing for embeddings
-- ChromaDB persistent storage for large datasets
-- Session state management for multi-user scenarios
 
 ✅ **Security**
 
 - Environment variables for sensitive data (API keys)
-- .gitignore prevents accidental credential commits
-- .env.example template for secure setup
 
 ## Technical Stack
 
@@ -79,50 +72,51 @@ A production-grade Retrieval-Augmented Generation (RAG) system that combines doc
 | UI Framework           | Streamlit 1.28.1                   |
 | Vector Database        | ChromaDB 0.4.24                    |
 | Document Processing    | LangChain 0.1.10 + PyPDF2 3.0.1    |
-| Embeddings             | Groq API (text-embedding-004)      |
+| Embeddings             | HuggingFace (all-MiniLM-L6-v2)     |
 | LLM                    | Groq API (llama-3.3-70b-versatile) |
 | Environment Management | python-dotenv 1.0.0                |
 
 ## Code Organization
 
-### Main Components in app.py
+### Main Components
 
-1. **Configuration & Setup** (Lines 1-50)
+1. **Configuration & Setup**
    - Logging configuration
    - Streamlit setup
    - Environment variables and constants
 
-2. **Text Preprocessing** (Lines 51-95)
+2. **Text Preprocessing**
    - `clean_text()`: Removes unwanted characters, URLs, emails
    - `normalize_text()`: Converts to lowercase, normalizes spacing
 
-3. **Document Processing** (Lines 97-160)
+3. **Document Processing**
    - `extract_text_from_pdf()`: PDF text extraction
    - `extract_text_from_txt()`: TXT file reading
    - `chunk_documents()`: Text chunking with overlap
 
-4. **Embedding & Vector DB** (Lines 162-240)
+4. **Embedding & Vector DB**
    - `initialize_chroma_db()`: ChromaDB initialization
-   - `generate_embeddings_batch()`: Batch embedding generation
+   - `generate_embeddings_batch()`: Batch embedding generation (HuggingFace)
    - `store_embeddings_in_chromadb()`: Storage and indexing
 
-5. **Retrieval & Context** (Lines 242-310)
+5. **Retrieval & Context**
    - `retrieve_relevant_chunks()`: Semantic search
    - `construct_context()`: Context formatting for LLM
 
-6. **LLM Integration** (Lines 312-385)
-   - `generate_answer()`: LLM-based answer generation
+6. **LLM Integration**
+   - `generate_answer()`: LLM-based answer generation (Groq)
    - `post_process_answer()`: Answer formatting and cleanup
 
-7. **Session Management** (Lines 387-410)
+7. **Session Management**
    - Session state initialization
    - Collection management
 
-8. **Streamlit UI** (Lines 412-600)
+8. **Streamlit UI** (in `ui.py`)
    - Sidebar controls
    - Document upload interface
    - Q&A chat interface
    - Chat history display
+   - Snow effect on answer output
 
 ## How to Use
 
@@ -136,7 +130,7 @@ A production-grade Retrieval-Augmented Generation (RAG) system that combines doc
 ### Running
 
 ```bash
-streamlit run app.py
+streamlit run ui.py
 ```
 
 ### Using the Application
@@ -152,8 +146,9 @@ streamlit run app.py
 
 | File               | Purpose                             |
 | ------------------ | ----------------------------------- |
-| `app.py`           | Complete application (600+ lines)   |
-| `requirements.txt` | Python dependencies (7 packages)    |
+| `app.py`           | Core logic and backend functions    |
+| `ui.py`            | Streamlit UI entry point            |
+| `requirements.txt` | Python dependencies                 |
 | `.gitignore`       | Git ignore rules for sensitive data |
 | `.env.example`     | Template for environment variables  |
 | `SETUP.md`         | Setup and troubleshooting guide     |
@@ -164,13 +159,11 @@ The system handles:
 
 - Missing API keys (with clear error message)
 - PDF extraction failures (with fallback)
-- Embedding generation failures (with zero vector fallback)
+- Embedding generation failures (with error message)
 - ChromaDB connection issues
 - Missing collections
 - LLM API errors
 - File upload errors
-
-All errors are logged to `rag_system.log` for debugging.
 
 ## Performance Optimizations
 
@@ -205,9 +198,6 @@ For production deployment:
 - **Logs**: Check `rag_system.log` for issues
 - **ChromaDB Reset**: Delete `chroma_data/` folder if DB corrupts
 - **API Issues**: Monitor Groq API quota and limits
-- **Updates**: Regularly update dependencies for security patches
-
----
 
 **Version**: 1.0  
 **Last Updated**: January 2026  

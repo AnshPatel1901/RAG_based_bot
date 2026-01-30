@@ -30,15 +30,17 @@ pip install -r requirements.txt
 
 - Copy `.env.example` to `.env`
 - Open `.env` and add your Groq API key:
-  ```
-  GROQ_API_KEY=your_actual_api_key_here
-  ```
-- Get your API key from: https://console.groq.com/keys
+
+```
+GROQ_API_KEY=your_actual_api_key_here
+```
+
+Get your API key from: https://console.groq.com/keys
 
 ## 5. Run the Application
 
 ```bash
-streamlit run app.py
+streamlit run ui.py
 ```
 
 The application will open in your default browser at `http://localhost:8501`
@@ -46,25 +48,27 @@ The application will open in your default browser at `http://localhost:8501`
 ## Features
 
 - Upload PDF and TXT documents
-- Automatic text cleaning and chunking
-- Vector embeddings using Groq API
+- Automatic text cleaning and normalization
+- Vector embeddings using HuggingFace (all-MiniLM-L6-v2)
 - ChromaDB for persistent vector storage
 - RAG-based question answering
 - Chat history tracking
 - Source document viewing
+- Snow effect when answer is generated
 
 ## File Structure
 
 ```
 RAG_based_bot/
-├── app.py              # Main application file
+├── app.py              # Core logic and backend functions
+├── ui.py               # Streamlit UI entry point
 ├── requirements.txt    # Python dependencies
 ├── .env.example        # Environment variables template
 ├── .gitignore          # Git ignore rules
 ├── .env                # Local environment variables (not in git)
 ├── chroma_data/        # ChromaDB storage (not in git)
 ├── rag_system.log      # Application logs (not in git)
-└── venv/              # Virtual environment (not in git)
+└── venv/               # Virtual environment (not in git)
 ```
 
 ## Troubleshooting
@@ -82,7 +86,6 @@ RAG_based_bot/
 
 ### Issue: Embedding generation fails
 
-- Check your Groq API quota
 - Ensure internet connection is stable
 
 ## Production Deployment
